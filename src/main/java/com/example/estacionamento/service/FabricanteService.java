@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.example.estacionamento.dto.FabricanteDTO;
 import com.example.estacionamento.entities.Fabricante;
 import com.example.estacionamento.repository.FabricanteRepository;
+import com.example.estacionamento.util.FabricanteMapper;
 
 import jakarta.servlet.http.HttpServletResponse;
 
