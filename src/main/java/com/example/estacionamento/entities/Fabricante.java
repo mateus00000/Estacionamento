@@ -1,9 +1,12 @@
 package com.example.estacionamento.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Fabricante {
@@ -29,5 +32,16 @@ public class Fabricante {
     }
     public void setNacionalidade(String nacionalidade) {
         this.nacionalidade = nacionalidade;
+    }
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "status_id", referencedColumnName = "id")
+    private Status status;
+
+    public Status getStatus() {
+        return status;
+    }
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }
