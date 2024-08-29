@@ -3,6 +3,7 @@ package com.example.estacionamento.util;
 import com.example.estacionamento.dto.FabricanteDTO;
 import com.example.estacionamento.dto.StatusDTO;
 import com.example.estacionamento.entities.Fabricante;
+import com.example.estacionamento.entities.Status;
 
 public class FabricanteMapper {
     public static FabricanteDTO toDTO(Fabricante fabricante){
@@ -21,13 +22,12 @@ public class FabricanteMapper {
         fabricante.setNome(fabricanteDTO.getNome());
         fabricante.setNacionalidade(fabricanteDTO.getNacionalidade());
 
-        if (fabricanteDTO.getEnderecoDTO() != null){
-            Endereco status = new Endereco();
-            status.setId(fabricanteDTO.getEnderecoDTO().getId());
-            status.setCep(fabricanteDTO.getEnderecoDTO().getCep());
-            status.setNumero(fabricanteDTO.getEnderecoDTO().getNumero());
-            status.setComplemento(fabricanteDTO.getEnderecoDTO().getComplemento());
-            cliente.setEndereco(status);
+        if (fabricanteDTO.getStatusDTO() != null){
+            Status status = new Status();
+            status.setId(fabricanteDTO.getStatusDTO().getId());
+            status.setNome(fabricanteDTO.getStatusDTO().getNome());
+            status.setCodigo(fabricanteDTO.getStatusDTO().getCodigo());
+            fabricante.setStatus(status);
         }
 
         return fabricante;
