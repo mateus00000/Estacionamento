@@ -1,5 +1,7 @@
 package com.example.estacionamento.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -50,5 +52,44 @@ public class VeiculoService {
         veiculo = veiculoRepository.save(veiculo);
 
         return VeiculoMapper.toDTO(veiculo);
+    }
+
+    public List<VeiculoDTO> obterTodosVeiculos(){
+        List<Veiculo> veiculos = veiculoRepository.findAll();
+        List<VeiculoDTO> veiculosDTOs = new ArrayList<>();
+        for(Veiculo veiculo : veiculos){
+            veiculosDTOs.add(VeiculoMapper.toDTO(veiculo));
+        }    
+        return veiculosDTOs;
+    }
+
+    public Optional<VeiculoDTO> obterVeiculoPorId(Long id){
+        Optional<Veiculo> veiculo = veiculoRepository.findById(id);
+        if (veiculo.isPresent()) {
+            return Optional.of(VeiculoMapper.toDTO(veiculo.get()));
+        } else {
+            return Optional.empty();
+        }
+    }
+    public VeiculoDTO atualizarVeiculo(Long id, VeiculoDTO veiculoDTO) {
+        Optional<Veiculo> veiculoExistente = veiculoRepository.findById(id);
+        if (veiculoExistente.isPresent()) {
+            Veiculo veiculo = VeiculoMapper.toEntity(veiculoDTO);
+            veiculo.setId(id);
+            veiculo = veiculoRepository.save(veiculo);
+            return VeiculoMapper.toDTO(veiculo);
+        } else {
+            return null;
+        }
+    }
+
+    public boolean deletarVeiculo(Long id) {
+        Optional<Veiculo> veiculoExistente = veiculoRepository.findById(id);
+        if(veiculoExistente.isPresent()){
+            veiculoRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
