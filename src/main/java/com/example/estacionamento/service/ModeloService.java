@@ -1,5 +1,7 @@
 package com.example.estacionamento.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,4 +51,44 @@ public class ModeloService {
         modelo = modeloRepository.save(modelo);
         return ModeloMapper.toDTO(modelo);
     }
+
+    public List<ModeloDTO> obterTodosModelos(){
+        List<Modelo> modelos = modeloRepository.findAll();
+        List<ModeloDTO> modelosDTOs = new ArrayList<>();
+        for(Modelo modelo : modelos){
+            modelosDTOs.add(ModeloMapper.toDTO(modelo));
+        }    
+        return modelosDTOs;
+    }
+
+    public Optional<ModeloDTO> obterModeloPorId(Long id){
+        Optional<Modelo> modelo = modeloRepository.findById(id);
+        if (modelo.isPresent()) {
+            return Optional.of(ModeloMapper.toDTO(modelo.get()));
+        } else {
+            return Optional.empty();
+        }
+    }
+    public ModeloDTO atualizarModelo(Long id, ModeloDTO modeloDTO) {
+        Optional<Modelo> modeloExistente = modeloRepository.findById(id);
+        if (modeloExistente.isPresent()) {
+            Modelo modelo = ModeloMapper.toEntity(modeloDTO);
+            modelo.setId(id);
+            modelo = modeloRepository.save(modelo);
+            return ModeloMapper.toDTO(modelo);
+        } else {
+            return null;
+        }
+    }
+
+    public boolean deletarModelo(Long id) {
+        Optional<Modelo> modeloExistente = modeloRepository.findById(id);
+        if(modeloExistente.isPresent()){
+            modeloRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
 }
