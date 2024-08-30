@@ -1,23 +1,20 @@
 package com.example.estacionamento.dto;
 
-import com.example.estacionamento.entities.Fabricante;
-import com.example.estacionamento.entities.Tipo;
-
 public class ModeloDTO {
     
     private Long id;
     private String nome;
-    private Fabricante fabricante;
-    private Tipo tipo;
+    private FabricanteDTO fabricanteDTO;
+    private TipoDTO tipoDTO;
     
     public ModeloDTO() {
     }
 
-    public ModeloDTO(Long id, String nome, Fabricante fabricante, Tipo tipo) {
+    public ModeloDTO(Long id, String nome, FabricanteDTO fabricanteDTO, TipoDTO tipoDTO) {
         this.id = id;
         this.nome = nome;
-        this.fabricante = fabricante;
-        this.tipo = tipo;
+        this.fabricanteDTO = fabricanteDTO;
+        this.tipoDTO = tipoDTO;
     }
 
     public Long getId() {
@@ -36,19 +33,19 @@ public class ModeloDTO {
         this.nome = nome;
     }
 
-    public Fabricante getFabricante() {
-        return fabricante;
+    public FabricanteDTO getFabricanteDTO() {
+        return fabricanteDTO;
     }
 
-    public void setFabricante(Fabricante fabricante) {
-        this.fabricante = fabricante;
+    public void setFabricanteDTO(FabricanteDTO fabricanteDTO) {
+        this.fabricanteDTO = fabricanteDTO;
     }
 
-    public Tipo getTipo() {
-        return tipo;
+    public TipoDTO getTipoDTO() {
+        return tipoDTO;
     }
 
-    public void setTipo(Tipo tipo) {
-        this.tipo = tipo;
+    public void setTipoDTO(TipoDTO tipoDTO) {
+        this.tipoDTO = tipoDTO;
     }
 }

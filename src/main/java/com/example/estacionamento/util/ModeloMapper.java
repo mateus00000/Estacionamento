@@ -2,34 +2,45 @@ package com.example.estacionamento.util;
 
 import com.example.estacionamento.dto.FabricanteDTO;
 import com.example.estacionamento.dto.ModeloDTO;
+import com.example.estacionamento.dto.TipoDTO;
+import com.example.estacionamento.entities.Fabricante;
 import com.example.estacionamento.entities.Modelo;
-import com.example.estacionamento.entities.Status;
+import com.example.estacionamento.entities.Tipo;
 
 public class ModeloMapper {
-    public static ModeloDTO toDTO(Modelo modelo, Status status){
+    public static ModeloDTO toDTO(Modelo modelo) {
+        if (modelo == null) {
+            return null;
+        }
 
-        FabricanteDTO fabricanteDTO = new FabricanteDTO();
-        fabricanteDTO.setId(modelo.getFabricante().getId());
-        fabricanteDTO.setNome(modelo.getFabricante().getNome());
-        fabricanteDTO.setNacionalidade(modelo.getFabricante().getNacionalidade());
+        FabricanteDTO fabricanteDTO = FabricanteMapper.toDTO(modelo.getFabricante());
+        TipoDTO tipoDTO = TipoMapper.toDTO(modelo.getTipo());
 
-        return new ModeloDTO(modelo.getId(), modelo.getNome(), fabricanteDTO);
-}     
+        return new ModeloDTO(modelo.getId(),modelo.getNome(),fabricanteDTO,tipoDTO);
+    }
 
-    public static Modelo toEntity(ModeloDTO fabricanteDTO){
+    public static Modelo toEntity(ModeloDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+
         Modelo modelo = new Modelo();
-        modelo.setId(fabricanteDTO.getId());
-        modelo.setNome(fabricanteDTO.getNome());
-        modelo.setNacionalidade(fabricanteDTO.getNacionalidade());
+        modelo.setId(dto.getId());
+        modelo.setNome(dto.getNome());
 
-        if (fabricanteDTO.getStatusDTO() != null){
-            Status status = new Status();
-            status.setId(fabricanteDTO.getStatusDTO().getId());
-            status.setNome(fabricanteDTO.getStatusDTO().getNome());
-            status.setCodigo(fabricanteDTO.getStatusDTO().getCodigo());
-            modelo.setStatus(status);
+        if (dto.getFabricanteDTO() != null && dto.getFabricanteDTO().getId() != null) {
+            Fabricante fabricante = new Fabricante();
+            fabricante.setId(dto.getFabricanteDTO().getId());
+            modelo.setFabricante(fabricante);
+        }
+
+        if (dto.getTipoDTO() != null && dto.getTipoDTO().getId() != null) {
+            Tipo tipo = new Tipo();
+            tipo.setId(dto.getTipoDTO().getId());
+            modelo.setTipo(tipo);
         }
 
         return modelo;
     }
 }
+
