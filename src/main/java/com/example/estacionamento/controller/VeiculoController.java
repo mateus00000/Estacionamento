@@ -1,7 +1,6 @@
 package com.example.estacionamento.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,26 +29,26 @@ public class VeiculoController {
     }
 
     @GetMapping
-    public List<VeiculoDTO> obterTodosVeiculos() {
-        
-        return veiculoService.obterTodosVeiculos();
+    public ResponseEntity<List<VeiculoDTO>> obterTodosVeiculos() {
+        List<VeiculoDTO> veiculoDTO = veiculoService.obterTodosVeiculos();
+        return ResponseEntity.ok(veiculoDTO);
     }
 
     @GetMapping("/{id}")
-    public Optional<VeiculoDTO> obterVeiculoPorId(@PathVariable Long id){
-
-        return veiculoService.obterVeiculoPorId(id);
+    public ResponseEntity<VeiculoDTO> obterVeiculoPorId(@PathVariable Long id) {
+        VeiculoDTO veiculo = veiculoService.obterVeiculoPorId(id);
+        return ResponseEntity.ok(veiculo);
     }
 
     @PutMapping("/{id}")
-    public Optional<VeiculoDTO> atualizarVeiculo(@PathVariable Long id, @RequestBody VeiculoDTO veiculoDTO){
-        
-        return Optional.ofNullable(veiculoService.atualizarVeiculo(id, veiculoDTO));
+    public ResponseEntity<VeiculoDTO> atualizarVeiculo(@PathVariable Long id, @RequestBody VeiculoDTO veiculoDTO) {
+        VeiculoDTO veiculoAtualizado = veiculoService.atualizarVeiculo(id, veiculoDTO);
+        return ResponseEntity.ok(veiculoAtualizado);
     }
 
-    @SuppressWarnings("rawtypes")
     @DeleteMapping("/{id}")
-    public Optional deletarVeiculo(@PathVariable Long id) {
-        return Optional.ofNullable(veiculoService.deletarVeiculo(id));
+    public ResponseEntity<Void> deletarVeiculo(@PathVariable Long id) {
+        veiculoService.deletarVeiculo(id);
+        return ResponseEntity.noContent().build();
     }
 }
