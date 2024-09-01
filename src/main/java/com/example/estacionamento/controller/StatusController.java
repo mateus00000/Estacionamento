@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.estacionamento.dto.StatusDTO;
 import com.example.estacionamento.service.StatusService;
 
-import jakarta.servlet.http.HttpServletResponse;
-
 @RestController
 @RequestMapping("/status")
 public class StatusController {
@@ -26,26 +24,27 @@ public class StatusController {
     private StatusService statusService;
 
     @PostMapping
-    public ResponseEntity<StatusDTO> criarStatus(@RequestBody StatusDTO statusDTO, HttpServletResponse response){
-        return statusService.criarStatus(statusDTO, response);
+    public ResponseEntity<StatusDTO> criarStatus(@RequestBody StatusDTO statusDTO) {
+        StatusDTO novoStatus = statusService.criarStatus(statusDTO);
+        return ResponseEntity.ok(novoStatus);
     }
 
     @GetMapping
-    public List<StatusDTO> obterTodosStatus() {
-        
-        return statusService.obterTodosStatus();
+    public ResponseEntity <List<StatusDTO>> obterTodosStatus() {
+        List<StatusDTO> statusDTO = statusService.obterTodosStatus();
+        return ResponseEntity.ok(statusDTO);
     }
 
     @GetMapping("/{id}")
-    public Optional<StatusDTO> obterStatusPorId(@PathVariable Long id){
-
-        return statusService.obterStatusPorId(id);
+    public ResponseEntity<StatusDTO> obterStatusPorId(@PathVariable Long id) {
+        StatusDTO status = statusService.obterStatusPorId(id);
+        return ResponseEntity.ok(status);
     }
 
     @PutMapping("/{id}")
-    public Optional<StatusDTO> atualizarStatus(@PathVariable Long id, @RequestBody StatusDTO statusDTO){
-        
-        return Optional.ofNullable(statusService.atualizarStatus(id, statusDTO));
+    public ResponseEntity<StatusDTO> atualizarStatus(@PathVariable Long id, @RequestBody StatusDTO statusDTO) {
+        StatusDTO statusAtualizado = statusService.atualizarStatus(id, statusDTO);
+        return ResponseEntity.ok(statusAtualizado);
     }
 
     @SuppressWarnings("rawtypes")
