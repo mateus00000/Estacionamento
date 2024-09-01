@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,21 +31,21 @@ public class ModeloController {
     }
 
     @GetMapping
-    public List<ModeloDTO> obterTodosModelos() {
-        
-        return modeloService.obterTodosModelos();
+    public ResponseEntity<List<ModeloDTO>> obterTodosModelos() {
+        List<ModeloDTO> modelos = modeloService.obterTodosModelos();
+        return ResponseEntity.ok(modelos);
     }
 
     @GetMapping("/{id}")
-    public Optional<ModeloDTO> obterModeloPorId(@PathVariable Long id){
-
-        return modeloService.obterModeloPorId(id);
+    public ResponseEntity<ModeloDTO> obterModeloPorId(@PathVariable Long id) {
+        ModeloDTO modelo = modeloService.obterModeloPorId(id);
+        return ResponseEntity.ok(modelo);
     }
 
     @PutMapping("/{id}")
-    public Optional<ModeloDTO> atualizarModelo(@PathVariable Long id, @RequestBody ModeloDTO modeloDTO){
-        
-        return Optional.ofNullable(modeloService.atualizarModelo(id, modeloDTO));
+    public ResponseEntity<ModeloDTO> atualizarModelo(@PathVariable Long id, @RequestBody ModeloDTO modeloDTO) {
+        ModeloDTO modeloAtualizado = modeloService.atualizarModelo(id, modeloDTO);
+        return ResponseEntity.ok(modeloAtualizado);
     }
 
     @SuppressWarnings("rawtypes")

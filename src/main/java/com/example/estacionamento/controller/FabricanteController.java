@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.estacionamento.dto.FabricanteDTO;
 import com.example.estacionamento.service.FabricanteService;
 
-import jakarta.servlet.http.HttpServletResponse;
-
 @RestController
 @RequestMapping("/fabricantes")
 public class FabricanteController {
@@ -26,8 +24,9 @@ public class FabricanteController {
     private FabricanteService fabricanteService;
 
     @PostMapping
-    public ResponseEntity<FabricanteDTO> criarFabricante(@RequestBody FabricanteDTO fabricanteDTO, HttpServletResponse response){
-        return fabricanteService.criarFabricante(fabricanteDTO, response);
+    public FabricanteDTO criarFabricante(@RequestBody FabricanteDTO fabricanteDTO) {
+        return fabricanteService.criarFabricante(fabricanteDTO);
+
     }
 
     @GetMapping
@@ -37,9 +36,9 @@ public class FabricanteController {
     }
 
     @GetMapping("/{id}")
-    public Optional<FabricanteDTO> obterFabricantePorId(@PathVariable Long id){
-
-        return fabricanteService.obterFabricantePorId(id);
+    public ResponseEntity<FabricanteDTO> obterFabricantePorId(@PathVariable Long id) {
+        FabricanteDTO fabricante = fabricanteService.obterFabricantePorId(id);
+        return ResponseEntity.ok(fabricante);
     }
 
     @PutMapping("/{id}")

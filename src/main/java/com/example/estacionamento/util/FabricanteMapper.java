@@ -6,27 +6,35 @@ import com.example.estacionamento.entities.Fabricante;
 import com.example.estacionamento.entities.Status;
 
 public class FabricanteMapper {
-    public static FabricanteDTO toDTO(Fabricante fabricante){
+    public static FabricanteDTO toDTO(Fabricante fabricante) {
+        if (fabricante == null) {
+            return null;
+        }
 
-        StatusDTO statusDTO = new StatusDTO();
-        statusDTO.setId(fabricante.getStatus().getId());
-        statusDTO.setNome(fabricante.getStatus().getNome());
-        statusDTO.setCodigo(fabricante.getStatus().getCodigo());
+        // Use StatusMapper para converter Status para StatusDTO
+        StatusDTO statusDTO = StatusMapper.toDTO(fabricante.getStatus());
 
-        return new FabricanteDTO(fabricante.getId(), fabricante.getNome(), fabricante.getNacionalidade(), statusDTO);
-}     
+        return new FabricanteDTO(
+            fabricante.getId(),
+            fabricante.getNome(),
+            fabricante.getNacionalidade(),
+            statusDTO
+        );
+    }
 
-    public static Fabricante toEntity(FabricanteDTO fabricanteDTO){
+    public static Fabricante toEntity(FabricanteDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+
         Fabricante fabricante = new Fabricante();
-        fabricante.setId(fabricanteDTO.getId());
-        fabricante.setNome(fabricanteDTO.getNome());
-        fabricante.setNacionalidade(fabricanteDTO.getNacionalidade());
+        fabricante.setId(dto.getId());
+        fabricante.setNome(dto.getNome());
+        fabricante.setNacionalidade(dto.getNacionalidade());
 
-        if (fabricanteDTO.getStatusDTO() != null){
+        if (dto.getStatusDTO() != null && dto.getStatusDTO().getId() != null) {
             Status status = new Status();
-            status.setId(fabricanteDTO.getStatusDTO().getId());
-            status.setNome(fabricanteDTO.getStatusDTO().getNome());
-            status.setCodigo(fabricanteDTO.getStatusDTO().getCodigo());
+            status.setId(dto.getStatusDTO().getId());
             fabricante.setStatus(status);
         }
 

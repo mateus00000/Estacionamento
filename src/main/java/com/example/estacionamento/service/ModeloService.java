@@ -3,6 +3,7 @@ package com.example.estacionamento.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,33 +53,25 @@ public class ModeloService {
         return ModeloMapper.toDTO(modelo);
     }
 
-    public List<ModeloDTO> obterTodosModelos(){
-        List<Modelo> modelos = modeloRepository.findAll();
-        List<ModeloDTO> modelosDTOs = new ArrayList<>();
-        for(Modelo modelo : modelos){
-            modelosDTOs.add(ModeloMapper.toDTO(modelo));
-        }    
-        return modelosDTOs;
+    public List<ModeloDTO> obterTodosModelos() {
+        return modeloRepository.findAll().stream()
+                .map(ModeloMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public Optional<ModeloDTO> obterModeloPorId(Long id){
-        Optional<Modelo> modelo = modeloRepository.findById(id);
-        if (modelo.isPresent()) {
-            return Optional.of(ModeloMapper.toDTO(modelo.get()));
-        } else {
-            return Optional.empty();
-        }
+    public ModeloDTO obterModeloPorId(Long id) {
+        return modeloRepository.findById(id)
+                .map(ModeloMapper::toDTO)
+                .orElseThrow(() -> new RuntimeException("Modelo não encontrado"));
     }
+
     public ModeloDTO atualizarModelo(Long id, ModeloDTO modeloDTO) {
-        Optional<Modelo> modeloExistente = modeloRepository.findById(id);
-        if (modeloExistente.isPresent()) {
-            Modelo modelo = ModeloMapper.toEntity(modeloDTO);
-            modelo.setId(id);
-            modelo = modeloRepository.save(modelo);
-            return ModeloMapper.toDTO(modelo);
-        } else {
-            return null;
-        }
+        Modelo modeloExistente = modeloRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Modelo não encontrado"));
+
+        modeloExistente.setNome(modeloDTO.getNome());
+        Modelo modeloAtualizado = modeloRepository.save(modeloExistente);
+        return ModeloMapper.toDTO(modeloAtualizado);
     }
 
     public boolean deletarModelo(Long id) {

@@ -5,15 +5,26 @@ import com.example.estacionamento.entities.Status;
 
 public class StatusMapper {
 
-    public static StatusDTO toDTO(Status status){
-        return new StatusDTO(status.getId(), status.getNome(), status.getCodigo());
-    }     
+    public static StatusDTO toDTO(Status status) {
+        if (status == null) {
+            return null;
+        }
 
-    public static Status toEntity(StatusDTO statusDTO){
+        return new StatusDTO(
+                status.getId(),
+                status.getNome(),
+                status.getCodigo());
+    }
+
+    public static Status toEntity(StatusDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+
         Status status = new Status();
-        status.setId(statusDTO.getId());
-        status.setNome(statusDTO.getNome());
-        status.setCodigo(statusDTO.getCodigo());
+        status.setId(dto.getId());
+        status.setNome(dto.getNome());
+        status.setCodigo(dto.getCodigo());
 
         return status;
     }
