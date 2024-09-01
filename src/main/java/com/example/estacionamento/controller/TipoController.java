@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.estacionamento.dto.TipoDTO;
 import com.example.estacionamento.service.TipoService;
 
-import jakarta.servlet.http.HttpServletResponse;
-
 @RestController
 @RequestMapping("/tipos")
 public class TipoController {
@@ -26,26 +24,27 @@ public class TipoController {
     private TipoService tipoService;
 
     @PostMapping
-    public ResponseEntity<TipoDTO> criarTipo(@RequestBody TipoDTO tipoDTO, HttpServletResponse response){
-        return tipoService.criarTipo(tipoDTO, response);
+    public TipoDTO criarTipo(@RequestBody TipoDTO tipoDTO) {
+        return tipoService.criarTipo(tipoDTO);
+
     }
 
     @GetMapping
-    public List<TipoDTO> obterTodosTipos() {
-        
-        return tipoService.obterTodosTipos();
+    public ResponseEntity<List<TipoDTO>> obterTodosTipos() {
+        List<TipoDTO> tipos = tipoService.obterTodosTipos();
+        return ResponseEntity.ok(tipos);
     }
 
     @GetMapping("/{id}")
-    public Optional<TipoDTO> obterTipoPorId(@PathVariable Long id){
-
-        return tipoService.obterTipoPorId(id);
+    public ResponseEntity<TipoDTO> obterTipoPorId(@PathVariable Long id) {
+        TipoDTO tipo = tipoService.obterTipoPorId(id);
+        return ResponseEntity.ok(tipo);
     }
 
     @PutMapping("/{id}")
-    public Optional<TipoDTO> atualizarTipo(@PathVariable Long id, @RequestBody TipoDTO tipoDTO){
-        
-        return Optional.ofNullable(tipoService.atualizarTipo(id, tipoDTO));
+    public ResponseEntity<TipoDTO> atualizarTipo(@PathVariable Long id, @RequestBody TipoDTO tipoDTO) {
+        TipoDTO tipoAtualizado = tipoService.atualizarTipo(id, tipoDTO);
+        return ResponseEntity.ok(tipoAtualizado);
     }
 
     @SuppressWarnings("rawtypes")
