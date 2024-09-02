@@ -34,7 +34,7 @@ public class Fabricante {
         this.nacionalidade = nacionalidade;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "status_id", referencedColumnName = "id")
     private Status status;
 

@@ -76,6 +76,7 @@ public class ModeloService {
     public boolean deletarModelo(Long id) {
         Optional<Modelo> modeloExistente = modeloRepository.findById(id);
         if(modeloExistente.isPresent()){
+            // Remover o fabricante sem afetar o status
             modeloRepository.deleteById(id);
             return true;
         } else {

@@ -71,6 +71,7 @@ public class FabricanteService {
     public boolean deletarFabricante(Long id) {
         Optional<Fabricante> fabricanteExistente = fabricanteRepository.findById(id);
         if(fabricanteExistente.isPresent()){
+            // Remover o fabricante sem afetar o status
             fabricanteRepository.deleteById(id);
             return true;
         } else {

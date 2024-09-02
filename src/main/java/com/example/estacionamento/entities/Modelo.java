@@ -28,7 +28,7 @@ public class Modelo {
         this.nome = nome;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "fabricante_id", referencedColumnName = "id")
     private Fabricante fabricante;
 
@@ -40,7 +40,7 @@ public class Modelo {
         this.fabricante = fabricante;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "tipo_id", referencedColumnName = "id")
     private Tipo tipo;
 
