@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.estacionamento.dto.FabricanteDTO;
+import com.example.estacionamento.entities.Fabricante;
 import com.example.estacionamento.service.FabricanteService;
 
 @RestController
@@ -51,5 +53,16 @@ public class FabricanteController {
     @DeleteMapping("/{id}")
     public Optional deletarFabricante(@PathVariable Long id) {
         return Optional.ofNullable(fabricanteService.deletarFabricante(id));
+    }
+
+    @GetMapping("/nacionalidade")
+    public List<Fabricante> buscarPorNacionalidade(@RequestParam String nacionalidade) {
+        return fabricanteService.encontrarPorNacionalidade(nacionalidade);
+    }
+
+    // Endpoint para contar fabricantes por nacionalidade
+    @GetMapping("/count/nacionalidade")
+    public long contarPorNacionalidade(@RequestParam String nacionalidade) {
+        return fabricanteService.contarPorNacionalidade(nacionalidade);
     }
 }

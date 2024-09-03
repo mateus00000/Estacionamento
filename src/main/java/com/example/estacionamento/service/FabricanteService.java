@@ -78,4 +78,14 @@ public class FabricanteService {
             return false;
         }
     }
+
+    // Método para buscar fabricantes pela nacionalidade
+    public List<Fabricante> encontrarPorNacionalidade(String nacionalidade) {
+        return fabricanteRepository.findByNacionalidade(nacionalidade);
+    }
+
+    // Método para contar fabricantes por nacionalidade
+    public long contarPorNacionalidade(String nacionalidade) {
+        return fabricanteRepository.countByNacionalidade(nacionalidade);
+    }
 }
