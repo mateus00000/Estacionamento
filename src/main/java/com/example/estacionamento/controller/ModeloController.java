@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.estacionamento.dto.ModeloDTO;
+import com.example.estacionamento.entities.Modelo;
 import com.example.estacionamento.service.ModeloService;
 
 @RestController
@@ -52,5 +54,11 @@ public class ModeloController {
     @DeleteMapping("/{id}")
     public Optional deletarModelo(@PathVariable Long id) {
         return Optional.ofNullable(modeloService.deletarModelo(id));
+    }
+
+    // Endpoint para buscar modelos pela nacionalidade do fabricante
+    @GetMapping("/nacionalidade")
+    public List<Modelo> buscarPorNacionalidadeFabricante(@RequestParam String nacionalidade) {
+        return modeloService.encontrarPorNacionalidadeFabricante(nacionalidade);
     }
 }
