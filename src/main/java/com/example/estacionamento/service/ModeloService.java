@@ -85,6 +85,11 @@ public class ModeloService {
     }
 
     // Método para buscar modelos pela nacionalidade do fabricante
+    /*public List<Modelo> encontrarPorNacionalidadeFabricante(String nacionalidade) {
+        return modeloRepository.findModelosByFabricanteNacionalidade(nacionalidade);
+    }*/
+
+    // Método para buscar modelos pela nacionalidade do fabricante
     public List<Modelo> encontrarPorNacionalidadeFabricante(String nacionalidade) {
         return modeloRepository.findModelosByFabricanteNacionalidade(nacionalidade);
     }

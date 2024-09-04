@@ -6,7 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Modelo {
@@ -28,7 +28,7 @@ public class Modelo {
         this.nome = nome;
     }
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "fabricante_id", referencedColumnName = "id")
     private Fabricante fabricante;
 
@@ -40,7 +40,7 @@ public class Modelo {
         this.fabricante = fabricante;
     }
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "tipo_id", referencedColumnName = "id")
     private Tipo tipo;
 

@@ -12,6 +12,10 @@ import com.example.estacionamento.entities.Modelo;
 @Repository
 public interface ModeloRepository extends JpaRepository <Modelo, Long> {
 
-    @Query("SELECT m FROM Modelo m JOIN m.fabricante f WHERE f.nacionalidade = :nacionalidade")
+    /*@Query("SELECT m FROM Modelo m JOIN m.fabricante f WHERE f.nacionalidade = :nacionalidade")
+    List<Modelo> findModelosByFabricanteNacionalidade(@Param("nacionalidade")String nacionalidade);*/
+
+    //Usando uma query nativa para chamar a stored procedure com o paramentro nacionalidade
+    @Query(value = "CALL GetModelosByNacionalidade(:nacionalidade)", nativeQuery = true)
     List<Modelo> findModelosByFabricanteNacionalidade(@Param("nacionalidade")String nacionalidade);
 }
